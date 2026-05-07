@@ -10,19 +10,13 @@ function createWindow() {
             contextIsolation: false
         }
     });
-
     win.loadFile("index.html");
 }
 
-// Auto Type function
 ipcMain.handle("auto-type", async (event, text) => {
-    try {
-        robot.setKeyboardDelay(15);
-        robot.typeString(text);
-        return { success: true };
-    } catch (e) {
-        return { success: false };
-    }
+    robot.setKeyboardDelay(10);
+    robot.typeString(text);
+    return { success: true };
 });
 
 app.whenReady().then(createWindow);
