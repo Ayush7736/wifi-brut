@@ -1,10 +1,10 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
-const { exec } = require("child_process");
+const robot = require("robotjs");
 
 function createWindow() {
     const win = new BrowserWindow({
-        width: 1020,
-        height: 740,
+        width: 1100,
+        height: 780,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
@@ -14,25 +14,15 @@ function createWindow() {
     win.loadFile("index.html");
 }
 
-// Real WiFi Scanning
-ipcMain.handle("wifi-scan", async () => {
-    return new Promise((resolve) => {
-        exec("netsh wlan show networks mode=Bssid", (err, stdout) => {
-            if (err) return resolve([]);
-            const ssids = [];
-            stdout.split("\n").forEach(line => {
-                if (line.includes("SSID") && line.includes(":")) {
-                    const name = line.split(":")[1].trim();
-                    if (name && !ssids.includes(name)) ssids.push(name);
-                }
-            });
-            resolve(ssids);
-        });
-    });
+// Auto Type function
+ipcMain.handle("auto-type", async (event, text) => {
+    try {
+        robot.setKeyboardDelay(15);
+        robot.typeString(text);
+        return { success: true };
+    } catch (e) {
+        return { success: false };
+    }
 });
 
 app.whenReady().then(createWindow);
-
-app.on("window-all-closed", () => {
-    if (process.platform !== "darwin") app.quit();
-});
