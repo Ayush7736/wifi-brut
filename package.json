@@ -1,12 +1,11 @@
 {
-  "name": "ai-typing-backend",
+  "name": "wifi-phantom",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "main.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "electron ."
   },
   "dependencies": {
-    "express": "^4.19.2",
-    "cors": "^2.8.5"
+    "electron": "^30.0.0"
   }
 }
