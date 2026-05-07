@@ -1,11 +1,10 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const { exec } = require("child_process");
-const fs = require("fs");
 
 function createWindow() {
     const win = new BrowserWindow({
-        width: 1000,
-        height: 720,
+        width: 1020,
+        height: 740,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
@@ -15,7 +14,7 @@ function createWindow() {
     win.loadFile("index.html");
 }
 
-// Real WiFi Scan
+// Real WiFi Scanning
 ipcMain.handle("wifi-scan", async () => {
     return new Promise((resolve) => {
         exec("netsh wlan show networks mode=Bssid", (err, stdout) => {
